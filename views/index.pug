@@ -3,3 +3,10 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  form
+    input(type='submit' id='submit' value='send')
+    input(type='text' name='_what_todo', onkeydown="if(event.ctrlKey&&event.keyCode==13){document.getElementById('submit').click();};")
+    p You can submit with Ctrl + Enter.
+  h3 These are what todo.
+
