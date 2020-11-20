@@ -4,9 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-const mysql2 = require('mysql2');
+const mysql = require('mysql2')
 
-const sql_connection = mysql2.createConnection({
+const connection = mysql.createConnection({
 	//This is just my case, You must reconfigure when use This repo!
 	host      :'192.168.10.20',
 	user      :'node',
@@ -31,14 +31,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-sql_connection.connect(function(err) {
+connection.connect(function(err) {
 	if (err) {
 		console.error('error connecting: ' + err.stack);
 		return;
 	}
-
-	console.log('DB connected as id ' + sql_connection.threadId);
+	console.log('DB connected as id ' + connection.threadId);
 });
+
+async function showlists(userid) {
+	await connection.beginTransaction();
+	try {
+		const [rows, fields] = await connection.execute('SELECT * FROM `todo` WHERE `name` = ?', [userid]);
+		return true;
+	} catch (e) {
+		console.log(e)
+	} finally {
+		connection.end();
+	}
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
