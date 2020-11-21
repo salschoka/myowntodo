@@ -36,7 +36,36 @@ connection.connect(function(err) {
 		console.error('error connecting: ' + err.stack);
 		return;
 	}
-	console.log('DB connected as id ' + connection.threadId);
+	console.log('SQL connected as id ' + connection.threadId);
+	console.log("search DB: todos");
+	connection.query("SHOW DATABASES LIKE `todo`;",function (err,res) {
+		console.log("DB seems '"+res+"'");
+		if (res===undefined) {
+			console.log("seems not existing");
+			console.log("We must create DB, I'll do it.");
+			connection.query("CREATE DATABASE IF NOT EXISTS todos;",function (er,res) {
+				console.log("create error is '"+er+"' , result is "+res);
+			});
+		} else {console.log("seems exists DB")
+		}})
+	console.log("trying to use DB.")
+	connection.query("USE `todos`;",function(er,res) {
+		if (er){
+			console.log(er);
+		}
+		console.log("use res:"+res);
+	})
+	connection.query("SELECT 1 FROM `todo` LIMIT 1;", function (err, results) {
+		console.log("table seems '"+results+"'");
+		if (results === undefined) {
+			console.log("create table: todo");
+			connection.query("CREATE TABLE todo (id_todo INT , todo_title VARCHAR(255) , what_todo VARCHAR(20000) , addDate_todo TIMESTAMP);",function (err) {
+				console.log("error:"+err);
+
+			});
+		}
+	});
+	// connection.end();
 });
 
 async function showlists(userid) {
@@ -47,7 +76,7 @@ async function showlists(userid) {
 	} catch (e) {
 		console.log(e)
 	} finally {
-		connection.end();
+		// connection.end();
 	}
 }
 
