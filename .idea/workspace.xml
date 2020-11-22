@@ -26,8 +26,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55fe5587-ceba-458e-888b-6dc9e27d543d" name="Default Changelist" comment="Connecting to SQL">
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020_11_20_12_28_[Default_Changelist]/shelved.patch" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +72,9 @@
       <workItem from="1605771243814" duration="231000" />
       <workItem from="1605773884311" duration="3421000" />
       <workItem from="1605793253948" duration="4610000" />
+      <workItem from="1605918884892" duration="342000" />
+      <workItem from="1606014436299" duration="839000" />
+      <workItem from="1606038173121" duration="7387000" />
     </task>
     <task id="LOCAL-00001" summary="Renew with Express">
       <created>1605748476904</created>
@@ -87,7 +90,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605753558615</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Accessing to SQL">
+      <created>1605919149379</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1605919149379</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -98,19 +108,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="master" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -120,7 +118,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Renew with Express" />
     <MESSAGE value="Add Simplest UI and trying to use mysql2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Simplest UI and trying to use mysql2" />
+    <MESSAGE value="Accessing to SQL" />
+    <option name="LAST_COMMIT_MESSAGE" value="Accessing to SQL" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1269" y="507" key="#JavaScript" timestamp="1605752626690">
@@ -135,22 +134,26 @@
       <screen x="0" y="40" width="3072" height="1688" />
     </state>
     <state x="1716" y="364" key="CommitChangelistDialog2/0.40.3072.1688/3840.-156.1080.1920@0.40.3072.1688" timestamp="1605918543355" />
-    <state width="1512" height="595" key="GridCell.Tab.0.bottom" timestamp="1605798688812">
+    <state width="1886" height="562" key="GridCell.Tab.0.bottom" timestamp="1606047273538">
       <screen x="0" y="40" width="3072" height="1688" />
     </state>
     <state width="1512" height="595" key="GridCell.Tab.0.bottom/0.40.3072.1688/3840.-121.1080.1920@0.40.3072.1688" timestamp="1605798688812" />
-    <state width="1512" height="595" key="GridCell.Tab.0.center" timestamp="1605798688812">
+    <state width="1886" height="562" key="GridCell.Tab.0.bottom/0.40.3072.1688/3840.-156.1080.1920@0.40.3072.1688" timestamp="1606047273538" />
+    <state width="1886" height="562" key="GridCell.Tab.0.center" timestamp="1606047273538">
       <screen x="0" y="40" width="3072" height="1688" />
     </state>
     <state width="1512" height="595" key="GridCell.Tab.0.center/0.40.3072.1688/3840.-121.1080.1920@0.40.3072.1688" timestamp="1605798688812" />
-    <state width="1512" height="595" key="GridCell.Tab.0.left" timestamp="1605798688812">
+    <state width="1886" height="562" key="GridCell.Tab.0.center/0.40.3072.1688/3840.-156.1080.1920@0.40.3072.1688" timestamp="1606047273538" />
+    <state width="1886" height="562" key="GridCell.Tab.0.left" timestamp="1606047273538">
       <screen x="0" y="40" width="3072" height="1688" />
     </state>
     <state width="1512" height="595" key="GridCell.Tab.0.left/0.40.3072.1688/3840.-121.1080.1920@0.40.3072.1688" timestamp="1605798688812" />
-    <state width="1512" height="595" key="GridCell.Tab.0.right" timestamp="1605798688812">
+    <state width="1886" height="562" key="GridCell.Tab.0.left/0.40.3072.1688/3840.-156.1080.1920@0.40.3072.1688" timestamp="1606047273538" />
+    <state width="1886" height="562" key="GridCell.Tab.0.right" timestamp="1606047273538">
       <screen x="0" y="40" width="3072" height="1688" />
     </state>
     <state width="1512" height="595" key="GridCell.Tab.0.right/0.40.3072.1688/3840.-121.1080.1920@0.40.3072.1688" timestamp="1605798688812" />
+    <state width="1886" height="562" key="GridCell.Tab.0.right/0.40.3072.1688/3840.-156.1080.1920@0.40.3072.1688" timestamp="1606047273538" />
     <state width="1511" height="605" key="GridCell.Tab.1.bottom" timestamp="1605753587516">
       <screen x="0" y="40" width="3072" height="1688" />
     </state>
@@ -211,11 +214,15 @@
       <screen x="0" y="40" width="3072" height="1688" />
     </state>
     <state x="1948" y="752" key="VCS.EditChangelistDialog/0.40.3072.1688/3840.-156.1080.1920@0.40.3072.1688" timestamp="1605918585880" />
-    <state x="1185" y="841" key="Vcs.Push.Dialog.v2" timestamp="1605918738422">
+    <state x="1185" y="841" key="Vcs.Push.Dialog.v2" timestamp="1605919169495">
       <screen x="0" y="40" width="3072" height="1688" />
     </state>
     <state x="367" y="614" key="Vcs.Push.Dialog.v2/0.40.3072.1688/3840.-121.1080.1920@0.40.3072.1688" timestamp="1605753562400" />
-    <state x="1185" y="841" key="Vcs.Push.Dialog.v2/0.40.3072.1688/3840.-156.1080.1920@0.40.3072.1688" timestamp="1605918738422" />
+    <state x="1185" y="841" key="Vcs.Push.Dialog.v2/0.40.3072.1688/3840.-156.1080.1920@0.40.3072.1688" timestamp="1605919169495" />
+    <state x="965" y="224" width="1724" height="790" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1605919205153">
+      <screen x="0" y="40" width="3072" height="1688" />
+    </state>
+    <state x="965" y="224" width="1724" height="790" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.40.3072.1688/3840.-156.1080.1920@0.40.3072.1688" timestamp="1605919205153" />
     <state x="2121" y="797" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605797054500">
       <screen x="0" y="40" width="3072" height="1688" />
     </state>
@@ -224,5 +231,23 @@
       <screen x="0" y="40" width="3072" height="1688" />
     </state>
     <state x="576" y="789" key="git4idea.remote.GitConfigureRemotesDialog/0.40.3072.1688/3840.-121.1080.1920@0.40.3072.1688" timestamp="1605748527637" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app.js</url>
+          <line>39</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app.js</url>
+          <line>55</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
