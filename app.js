@@ -31,31 +31,52 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-connection.connect(function(err) {
-	if (err) {
-		console.error('error connecting: ' + err.stack);
-		return;
-	}
-	console.log('SQL connected as id ' + connection.threadId);
-	console.log("search DB: todos");
-	connection.query("use todos;",function (err,res){
-		if (err) {
-			console.log("DB seems Unavailable, we must create DB or check something.");
-		} else {
-			console.log(res);
-			console.log("DB seems Available.");
-			connection.query("SELECT 1 FROM `todo` LIMIT 1;", function (err, res) {
-				if (err) {
-					console.log("table Unavailable.");
-				}	else {
-					console.log(res);
-					console.log("table Available.");
-				}
-			});
-		}
-	});
-});
+DBinit();
 
+function DBinit () {
+	connection.connect(function (err) {
+		if (err) {
+			console.error('error connecting: ' + err.stack);
+			return;
+		}
+		console.log('SQL connected as id ' + connection.threadId);
+		console.log("search DB: todos");
+		connection.query("use todos;", function (err, res) {
+			if (err) {
+				console.log("DB seems Unavailable, Trying to create DB.");
+				connection.query("CREATE DATABASE `todos`;", function (err, res) {
+					if (err) {
+						console.log("DB create errored. error:" + err);
+					} else {
+						// console.log(res);
+						console.log("DB create done");
+						DBinit();
+					}
+				})
+			} else {
+				// console.log(res);
+				console.log("DB Available.");
+				connection.query("SELECT 1 FROM `todo` LIMIT 1;", function (err, res) {
+					if (err) {
+						console.log("table Unavailable, Trying to create Table.");
+						connection.query("CREATE TABLE `todo` (id_todo INT , todo_title VARCHAR(255) , what_todo VARCHAR(20000) , addDate_todo TIMESTAMP);",function (err,res) {
+							if (err) {
+								console.log("Table create errored. error:" + err);
+							} else {
+								// console.log(res);
+								console.log("Table create done.")
+								DBinit();
+							}
+						});
+					} else {
+						// console.log(res);
+						console.log("table Available.");
+					}
+				});
+			}
+		});
+	});
+}
 async function showlists(userid) {
 	await connection.beginTransaction();
 	try {
