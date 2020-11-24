@@ -59,7 +59,7 @@ function DBinit () {
 				connection.query("SELECT 1 FROM `todo` LIMIT 1;", function (err, res) {
 					if (err) {
 						console.log("table Unavailable, Trying to create Table.");
-						connection.query("CREATE TABLE `todo` (id_todo INT , todo_title VARCHAR(255) , what_todo VARCHAR(20000) , addDate_todo TIMESTAMP);",function (err,res) {
+						connection.query("CREATE TABLE `todo` ( id_todo INT AUTO_INCREMENT PRIMARY KEY, todo_whose VARCHAR(128) , todo_title VARCHAR(255) , what_todo VARCHAR(20000) , addDate_todo TIMESTAMP);",function (err,res) {
 							if (err) {
 								console.log("Table create errored. error:" + err);
 							} else {
@@ -77,17 +77,18 @@ function DBinit () {
 		});
 	});
 }
-async function showlists(userid) {
-	await connection.beginTransaction();
-	try {
-		const [rows, fields] = await connection.execute('SELECT * FROM `todo` WHERE `name` = ?', [userid]);
-		return true;
-	} catch (e) {
-		console.log(e)
-	} finally {
-		// connection.end();
-	}
+
+function showlists(userid) {
+	connection.execute('SELECT * FROM `todo` WHERE `todo_whose`=?;', [userid],function (err,res){
+		console.log(res);
+		return res;
+	});
 }
+
+app.get('/list', (req,res) => {
+	console.log("req.query.value="+req.query.value);
+	res.send("your list: "+showlists(req.query.value));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

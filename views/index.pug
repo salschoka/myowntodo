@@ -6,8 +6,9 @@ block content
 
   form
     input(type='submit' id='submit' value='send')
-    input(type='text' name='_what_todo', onkeydown="if(event.ctrlKey&&event.keyCode==13){document.getElementById('submit').click();};")
+    input(type='text' name='add_todo',id='req_what_todo', placeholder="Your what todo", onkeydown="if(event.ctrlKey&&event.keyCode==13){document.getElementById('submit').click();};")
     p You can submit with Ctrl + Enter.
-  input(type='submit' id='req_list' value='request list')
+  form
+    input(type='submit' id='req_list' value='request list',)
   h3 These are what to do.
     p.todo This will be show you what to do.
