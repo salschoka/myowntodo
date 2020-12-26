@@ -4,11 +4,17 @@ block content
   h1= title
   p Welcome to #{title}
 
-  form
-    input(type='submit' id='submit' value='send')
-    input(type='text' name='add_todo',id='req_what_todo', placeholder="Your what todo", onkeydown="if(event.ctrlKey&&event.keyCode==13){document.getElementById('submit').click();};")
-    p You can submit with Ctrl + Enter.
-  form
-    input(type='submit' id='req_list' value='request list',)
+  input(type='submit' onclick="submit()")
+  input(
+    type='text' id="add_todo",name="todo",
+    placeholder="Your what todo",
+    onkeydown="if(event.ctrlKey&&event.keyCode==13){document.getElementById('submit').click();};"
+
+    )
+  p You can submit with Ctrl + Enter.
+  input(type='button' id='req_list' value='request list',
+    onclick="console.log('request list');request()")
   h3 These are what to do.
+  #lists
     p.todo This will be show you what to do.
+    p.todo Dark theme solves all Problems.

@@ -17,6 +17,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+app.disable('x-powered-by');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.disable('x-powered-by');
 
 DBinit();
 
@@ -39,7 +41,8 @@ function DBinit () {
 			console.error('error connecting: ' + err.stack);
 			return;
 		}
-		console.log('SQL connected as id ' + connection.threadId);
+//		console.log('SQL connected as id ' + connection.threadId);
+		console.log('SQL connected.');
 		console.log("search DB: todos");
 		connection.query("use todos;", function (err, res) {
 			if (err) {
@@ -78,17 +81,46 @@ function DBinit () {
 	});
 }
 
-function showlists(userid) {
-	connection.execute('SELECT * FROM `todo` WHERE `todo_whose`=?;', [userid],function (err,res){
-		console.log(res);
-		return res;
-	});
-}
+/*function showlists(userid) {
+  var ret = "pien";
+	connection.execute('SELECT todo_title,what_todo,addDate_todo FROM `todo` WHERE `todo_whose`=?;', [userid],function (err,res){
+    ret = JSON.stringify(res);
+    console.log("intheexefunc,ret:"+ret);
+    console.log("res:"+JSON.stringify(res));
+    return ret;
+  });
+  return ret;
+}*/
 
-app.get('/list', (req,res) => {
-	console.log("req.query.value="+req.query.value);
-	res.send("your list: "+showlists(req.query.value));
+app.get('/getlist', async function (req,res) {
+  var man = req.query.name;
+	console.log("who asked list: "+man);
+// 	res.send(showlists());
+//  res.send("You seems requested list.");
+//   console.log("todo: "+showlists("tester"));
+  var ret = await "fuga";
+
+  var self = res;
+
+  await connection.execute('SELECT todo_title,what_todo,addDate_todo FROM `todo` WHERE `todo_whose`=?;', [man],
+     function (err,res){
+      var ret = JSON.stringify(res);
+      console.log("res:"+JSON.stringify(res));
+//       console.log("ret:"+ret);
+
+      self.send(ret);
+
+    });
+//   await console.log("ret_final:"+ret);
+//   await res.send("todo: "+ret);
 });
+
+app.post('/post', function (req, res) {
+    // リクエストボディを出力
+    console.log(JSON.stringify(req.body));
+    res.send("You sent POST data.");
+    res.end()
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
