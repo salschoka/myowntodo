@@ -1,3 +1,5 @@
+let _data = "";
+
 function submit() {
 	console.log("function submit() called");
 //   console.log("submit: "+ document.getElementById("add_todo").value);
@@ -41,6 +43,15 @@ function request() {
   .done(function (res) {
     console.log("request success.");
     console.log("res: "+res);
+
+    if (res === _data) {
+      console.log("Data not changed, dom update skipped.");
+      return;
+    }
+    else {
+      console.log("Data updated.");
+      data = res;
+    }
 
     const _res = JSON.parse(res);
 
