@@ -93,8 +93,8 @@ function DBinit () {
 }*/
 
 app.get('/getlist', async function (req,res) {
-  var man = req.query.name;
-	console.log("who asked list: "+man);
+  var personsname_who_reqested_list = req.query.name;
+	console.log("who asked list: "+personsname_who_reqested_list);
 // 	res.send(showlists());
 //  res.send("You seems requested list.");
 //   console.log("todo: "+showlists("tester"));
@@ -102,7 +102,7 @@ app.get('/getlist', async function (req,res) {
 
   var self = res;
 
-  await connection.execute('SELECT todo_title,what_todo,addDate_todo FROM `todo` WHERE `todo_whose`=?;', [man],
+  await connection.execute('SELECT todo_title,what_todo,addDate_todo FROM `todo` WHERE `todo_whose`=?;', [personsname_who_reqested_list],
      function (err,res){
       var ret = JSON.stringify(res);
       console.log("res:"+JSON.stringify(res));
@@ -117,7 +117,17 @@ app.get('/getlist', async function (req,res) {
 
 app.post('/post', function (req, res) {
     // リクエストボディを出力
-    console.log(JSON.stringify(req.body));
+    // console.log(JSON.stringify(req.body));
+
+    var name_whose_posted = (req.body.name);
+    var postedtodo = (req.body.data);
+    var someones_todo_title = "this is a test value";
+    console.log(name_whose_posted+" posted "+postedtodo+".");
+	try {
+		connection.execute('insert into todo (todo_title,what_todo,todo_whose)values(?,?,?)', [someones_todo_title, postedtodo, name_whose_posted]);
+	} catch (e) {
+		console.log(e);
+	}
     res.send("You sent POST data.");
     res.end()
 })

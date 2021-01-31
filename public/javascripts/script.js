@@ -13,7 +13,7 @@ function submit() {
     url: './post',
     type: 'POST',
     data: {
-      'name': "hoge",
+      'name': "tester",
       'data': text
     },
     dataType: 'text'
@@ -58,7 +58,7 @@ function request() {
     $(".todo").remove();
 
     _res.forEach(todo => {
-      $("#lists").append("<p class='todo'>"+"タイトル:"+todo.todo_title+"<br>"+"todo:"+todo.what_todo+"<br>"+"いつ:"+todo.addDate_todo+"</p>");
+      $("#lists").append("<p class='todo'>"+"タイトル:"+todo.todo_title+"<br>"+"todo:"+todo.what_todo+"<br>"+"追加した日:"+todo.addDate_todo+"</p>");
     })
 //     JSON.parse(res);
 //     $("#lists").append("<p class='todo'>"+res+"</p>");
@@ -68,4 +68,3 @@ function request() {
 			console.log("err: "+JSON.stringify(err));
 	})
 };
-
