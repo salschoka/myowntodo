@@ -25,11 +25,12 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55fe5587-ceba-458e-888b-6dc9e27d543d" name="Default Changelist" comment="Connecting to SQL">
+    <list default="true" id="55fe5587-ceba-458e-888b-6dc9e27d543d" name="Default Changelist" comment="Implement posts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/javascripts/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/stylesheets/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/index.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.pug" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +84,8 @@
       <workItem from="1612015335310" duration="3061000" />
       <workItem from="1612080212432" duration="1307000" />
       <workItem from="1612087855050" duration="2804000" />
-      <workItem from="1612097042691" duration="2002000" />
+      <workItem from="1612097042691" duration="2156000" />
+      <workItem from="1612251714776" duration="8518000" />
     </task>
     <task id="LOCAL-00001" summary="Renew with Express">
       <created>1605748476904</created>
@@ -120,7 +122,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606107570684</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Implement posts">
+      <created>1612099115553</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1612099115553</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,7 +146,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="master" />
+                        <option value="origin/main" />
                       </list>
                     </value>
                   </entry>
@@ -156,7 +165,8 @@
     <MESSAGE value="Accessing to SQL" />
     <MESSAGE value="more reliable if statement" />
     <MESSAGE value="DB init and connection is finally completed." />
-    <option name="LAST_COMMIT_MESSAGE" value="DB init and connection is finally completed." />
+    <MESSAGE value="Implement posts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement posts" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -16,4 +16,36 @@ a {
 .todo {
   border: 2px solid brown;
   padding: 10px;
+  margin: 5px;
 }
+
+.fl {
+  float: left;
+}
+
+.todo_button {
+  margin: 3px;
+  padding: 3px;
+  border: 2px solid lightcoral;
+}
+
+.fl_right {
+  float: right;
+}
+
+.navibar {
+  font-size: large;
+}
+.navibar_title.active {
+  margin-right: 20px;
+  color: aquamarine;
+}
+.navibar_title {
+  margin-right: 20px;
+}
+
+.todo_actualbutton {
+  border: none;
+  cursor: pointer;
+}
+

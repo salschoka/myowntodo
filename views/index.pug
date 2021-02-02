@@ -8,12 +8,15 @@ block content
   input(
     type='text' id="add_todo",name="todo",
     placeholder="Your what todo",
-    onkeydown="if(event.ctrlKey&&event.keyCode==13){document.getElementById('submit').click();};"
-
+    onkeydown="if(event.ctrlKey&&event.keyCode==13){submit()};"
     )
   p You can submit with Ctrl + Enter.
+  p //Updating every 3 seconds.
   input(type='button' id='req_list' value='request list',
     onclick="console.log('request list');request()")
+  div.navibar
+    span.navibar_title.active Todo List
+    span.navibar_title Closed List
   h3 These are what to do.
   #lists
     p.todo This will be show you what to do.

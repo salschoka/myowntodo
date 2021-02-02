@@ -44,10 +44,10 @@ function DBinit () {
 //		console.log('SQL connected as id ' + connection.threadId);
 		console.log('SQL connected.');
 		console.log("search DB: todos");
-		connection.query("use todos;", function (err, res) {
+		connection.query("use todos;", function (err) {
 			if (err) {
 				console.log("DB seems Unavailable, Trying to create DB.");
-				connection.query("CREATE DATABASE `todos`;", function (err, res) {
+				connection.query("CREATE DATABASE `todos`;", function (err) {
 					if (err) {
 						console.log("DB create errored. error:" + err);
 					} else {
@@ -59,10 +59,10 @@ function DBinit () {
 			} else {
 				// console.log(res);
 				console.log("DB Available.");
-				connection.query("SELECT 1 FROM `todo` LIMIT 1;", function (err, res) {
+				connection.query("SELECT 1 FROM `todo` LIMIT 1;", function (err) {
 					if (err) {
 						console.log("table Unavailable, Trying to create Table.");
-						connection.query("CREATE TABLE `todo` ( id_todo INT AUTO_INCREMENT PRIMARY KEY, todo_whose VARCHAR(128) , todo_title VARCHAR(255) , what_todo VARCHAR(20000) , addDate_todo TIMESTAMP);",function (err,res) {
+						connection.query("CREATE TABLE `todo` ( id_todo INT AUTO_INCREMENT PRIMARY KEY, todo_whose VARCHAR(128) , todo_title VARCHAR(255) , what_todo VARCHAR(20000) , addDate_todo TIMESTAMP);",function (err) {
 							if (err) {
 								console.log("Table create errored. error:" + err);
 							} else {
@@ -83,7 +83,7 @@ function DBinit () {
 
 /*function showlists(userid) {
   var ret = "pien";
-	connection.execute('SELECT todo_title,what_todo,addDate_todo FROM `todo` WHERE `todo_whose`=?;', [userid],function (err,res){
+	connection.execute('SELECT todo_title,what_todo,addDate_todo FROM `to_do` WHERE `todo_whose`=?;', [userid],function (err,res){
     ret = JSON.stringify(res);
     console.log("intheexefunc,ret:"+ret);
     console.log("res:"+JSON.stringify(res));
@@ -97,7 +97,7 @@ app.get('/getlist', async function (req,res) {
 	console.log("who asked list: "+personsname_who_reqested_list);
 // 	res.send(showlists());
 //  res.send("You seems requested list.");
-//   console.log("todo: "+showlists("tester"));
+//   console.log("to_do: "+showlists("tester"));
   var ret = await "fuga";
 
   var self = res;
@@ -112,24 +112,35 @@ app.get('/getlist', async function (req,res) {
 
     });
 //   await console.log("ret_final:"+ret);
-//   await res.send("todo: "+ret);
+//   await res.send("to_do: "+ret);
 });
 
 app.post('/post', function (req, res) {
-    // リクエストボディを出力
-    // console.log(JSON.stringify(req.body));
 
-    var name_whose_posted = (req.body.name);
-    var postedtodo = (req.body.data);
-    var someones_todo_title = "this is a test value";
-    console.log(name_whose_posted+" posted "+postedtodo+".");
-	try {
-		connection.execute('insert into todo (todo_title,what_todo,todo_whose)values(?,?,?)', [someones_todo_title, postedtodo, name_whose_posted]);
-	} catch (e) {
-		console.log(e);
+	if(req.body.do != undefined) {
+		console.log("seems be delete or close");
+		if (req.body.do == delete_todo()) {
+			//todo DELETE FROM todo WHERE condition;
+		} else {
+			connection.execute('UPDATE todo SET WHERE id_todo = ?')
+		}
+	} else {
+		console.log("seems be post new todo");
+		// リクエストボディを出力
+		// console.log(JSON.stringify(req.body));
+
+		var name_whose_posted = (req.body.name);
+		var postedtodo = (req.body.data);
+		var someones_todo_title = "this is a test value";
+		console.log(name_whose_posted+" posted "+postedtodo+".");
+		try {
+			connection.execute('insert into todo (todo_title,what_todo,todo_whose)values(?,?,?)', [someones_todo_title, postedtodo, name_whose_posted]);
+		} catch (e) {
+			console.log(e);
+		}
+		res.send("You sent POST data.");
+		res.end()
 	}
-    res.send("You sent POST data.");
-    res.end()
 })
 
 // catch 404 and forward to error handler
