@@ -6,6 +6,10 @@ block content
 
   input(type='submit' onclick="submit()")
   input(
+    type='text' id="title_todo",name="todo",
+    placeholder="todo Title(任意)"
+  )
+  input(
     type='text' id="add_todo",name="todo",
     placeholder="Your what todo",
     onkeydown="if(event.ctrlKey&&event.keyCode==13){submit()};"

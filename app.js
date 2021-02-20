@@ -62,7 +62,7 @@ function DBinit () {
 				connection.query("SELECT 1 FROM `todo` LIMIT 1;", function (err) {
 					if (err) {
 						console.log("table Unavailable, Trying to create Table.");
-						connection.query("CREATE TABLE `todo` ( id_todo INT AUTO_INCREMENT PRIMARY KEY, todo_whose VARCHAR(128) , todo_title VARCHAR(255) , what_todo VARCHAR(20000) , addDate_todo TIMESTAMP);",function (err) {
+						connection.query("CREATE TABLE `todo` ( id_todo INT AUTO_INCREMENT PRIMARY KEY, todo_whose TEXT(255) , todo_title TEXT(255) , what_todo TEXT(25000) , addDate_todo TIMESTAMP , isVisible tinyint(1) DEFAULT '1') ROW_FORMAT=COMPRESSED;",function (err) {
 							if (err) {
 								console.log("Table create errored. error:" + err);
 							} else {
@@ -74,12 +74,18 @@ function DBinit () {
 					} else {
 						// console.log(res);
 						console.log("table Available.");
+						/*todo setting time zone ,show collect time on list
+						connection.query("SET SESSION time_zone = 'Asia/Tokyo';",function (err){
+							if (err) {
+								console.log("timezone set errored,err:"+err);
+							}
+						});*/
 					}
 				});
 			}
 		});
 	});
-}
+};
 
 /*function showlists(userid) {
   var ret = "pien";
@@ -102,7 +108,7 @@ app.get('/getlist', async function (req,res) {
 
   var self = res;
 
-  await connection.execute('SELECT todo_title,what_todo,addDate_todo FROM `todo` WHERE `todo_whose`=?;', [personsname_who_reqested_list],
+  await connection.execute('SELECT todo_title,what_todo,addDate_todo,id_todo FROM `todo` WHERE `todo_whose`=? AND `isVisible`=1;', [personsname_who_reqested_list],
      function (err,res){
       var ret = JSON.stringify(res);
       console.log("res:"+JSON.stringify(res));
@@ -119,10 +125,19 @@ app.post('/post', function (req, res) {
 
 	if(req.body.do != undefined) {
 		console.log("seems be delete or close");
-		if (req.body.do == delete_todo()) {
-			//todo DELETE FROM todo WHERE condition;
+		if (req.body.do == "delete") {
+			console.log("seems delete todo, id "+req.body.id+" will be delete");
+			connection.execute('DELETE FROM todo WHERE id_todo = ?',[req.body.id]);
+			//I don't know if it's a good to permanently delete some kind of content...
+		} else if (req.body.do == "close") {
+			console.log("seems close todo, id "+req.body.id+" will be hide");
+			connection.execute('UPDATE todo SET isVisible = 2 WHERE id_todo = ?',[req.body.id]);
+		} else if (req.body.do == "unclose") {
+			console.log("seems unclose todo, id "+req.body.id+" will be shown");
+			connection.execute('UPDATE todo SET isVisible = 1 WHERE id_todo = ?',[req.body.id]);
 		} else {
-			connection.execute('UPDATE todo SET WHERE id_todo = ?')
+			res.res("You seems sent wrong request, You alright?");
+			res.end();
 		}
 	} else {
 		console.log("seems be post new todo");
