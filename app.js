@@ -100,7 +100,20 @@ function DBinit () {
 
 app.get('/getlist', async function (req,res) {
   var personsname_who_reqested_list = req.query.name;
-	console.log("who asked list: "+personsname_who_reqested_list);
+
+  var willInclude = req.query.includeClose;
+  console.log("willInclude:"+willInclude);
+
+	//2 is hideen, 1 is showed
+  if (willInclude == true) {
+  	//idk why cannnot check bool like this, it through else side anytime
+	willInclude = "2";
+	console.log("INCLUDE");
+  } else {
+	willInclude = "1";
+  	console.log("WITHOUT");
+  }
+  // console.log("who asked list: "+personsname_who_reqested_list);
 // 	res.send(showlists());
 //  res.send("You seems requested list.");
 //   console.log("to_do: "+showlists("tester"));
@@ -108,21 +121,17 @@ app.get('/getlist', async function (req,res) {
 
   var self = res;
 
-  await connection.execute('SELECT todo_title,what_todo,addDate_todo,id_todo FROM `todo` WHERE `todo_whose`=? AND `isVisible`=1;', [personsname_who_reqested_list],
-     function (err,res){
-      var ret = JSON.stringify(res);
-      console.log("res:"+JSON.stringify(res));
-//       console.log("ret:"+ret);
-
-      self.send(ret);
-
-    });
+  await connection.execute('SELECT todo_title,what_todo,addDate_todo,id_todo FROM `todo` WHERE `todo_whose`=? AND `isVisible`=?;', [personsname_who_reqested_list,willInclude], function (err, res) {
+	var ret = JSON.stringify(res);
+	// console.log("response of sql execution:" + JSON.stringify(res));
+//  console.log("ret:"+ret);
+    self.send(ret);
+  });
 //   await console.log("ret_final:"+ret);
 //   await res.send("to_do: "+ret);
 });
 
 app.post('/post', function (req, res) {
-
 	if(req.body.do != undefined) {
 		console.log("seems be delete or close");
 		if (req.body.do == "delete") {

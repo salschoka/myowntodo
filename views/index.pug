@@ -18,6 +18,9 @@ block content
   p //Updating every 3 seconds.
   input(type='button' id='req_list' value='request list',
     onclick="console.log('request list');request()")
+  input(type='button' id='req_list_showhide' value='request list include closed',
+    onclick="console.log('request list include closed');request('closed')")
+  // coding it like this as an identifier for the content to request
   div.navibar
     span.navibar_title.active Todo List
     span.navibar_title Closed List

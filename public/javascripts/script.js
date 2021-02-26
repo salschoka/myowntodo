@@ -34,12 +34,23 @@ function submit() {
   });
 };
 
-function request() {
+function request(misc) {
 	console.log("function request() called");
+    console.log("misc is "+misc);
+	var request_include_closed = false;
+    console.log("requesting list");
+	if (misc == "closed") {
+	  console.log("and include closed todo");
+      request_include_closed = true;
+	}
+
 	$.ajax({
     url: "./getlist",
 		type: "GET",
-    data: { name: "tester" },
+    data: {
+      name: "tester",
+      includeClose: request_include_closed,
+    },
     dataType: "text",
 // 		cache: false,
   })
