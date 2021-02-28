@@ -84,7 +84,7 @@ function request(misc) {
       } else if (todo.isVisible == 1) {
         $("#lists").append("<div class='todo' data-todoid='"+todo.id_todo+"'><span>"+"タイトル:"+todo.todo_title+"<br>"+"todo:"+todo.what_todo+"<br>"+"追加した日:"+todo.addDate_todo+"<br>内部処理用id:"+todo.id_todo+"</span><span class='fl_right'>" +
             "<span class='todo_button'><button class='todo_actualbutton'  onclick=delete_todo($(this).parents('div.todo').attr('data-todoid'))>delete</button></span>" +
-            // "<span class='todo_button'><button class='todo_actualbutton' onclick=unclose_todo($(this).parents('div.todo').attr('data-todoid'))>unclose</button></span>" +
+            // "<span class='todo_button'><button class='todo_actualbutton' onclick=unclose_todo($(this).parents('div.to do').attr('data-todoid'))>unclose</button></span>" +
             "<span class='todo_button'><button class='todo_actualbutton'   onclick=close_todo($(this).parents('div.todo').attr('data-todoid'))>close</button></span>" +
             "</span></div>");
       } else {
