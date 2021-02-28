@@ -19,6 +19,12 @@ a {
   margin: 5px;
 }
 
+.todo_closed {
+  border: 2px solid darkblue;
+  padding: 10px;
+  margin: 5px;
+}
+
 .fl {
   float: left;
 }

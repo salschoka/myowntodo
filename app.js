@@ -102,16 +102,16 @@ app.get('/getlist', async function (req,res) {
   var personsname_who_reqested_list = req.query.name;
 
   var willInclude = req.query.includeClose;
-  console.log("willInclude:"+willInclude);
+  // console.log("typeof willincude is "+typeof(willInclude));
 
 	//2 is hideen, 1 is showed
-  if (willInclude == true) {
-  	//idk why cannnot check bool like this, it through else side anytime
+  if (willInclude == "true") {
+  	//It was seems String
 	willInclude = "2";
-	console.log("INCLUDE");
+	// console.log("INCLUDE");
   } else {
 	willInclude = "1";
-  	console.log("WITHOUT");
+  	// console.log("WITHOUT");
   }
   // console.log("who asked list: "+personsname_who_reqested_list);
 // 	res.send(showlists());
@@ -121,7 +121,8 @@ app.get('/getlist', async function (req,res) {
 
   var self = res;
 
-  await connection.execute('SELECT todo_title,what_todo,addDate_todo,id_todo FROM `todo` WHERE `todo_whose`=? AND `isVisible`=?;', [personsname_who_reqested_list,willInclude], function (err, res) {
+  // await connection.execute('SELECT todo_title,what_todo,addDate_todo,id_todo FROM `to do` WHERE `todo_whose`=? AND `isVisible`= 1 OR ?;', [personsname_who_reqested_list,willInclude], function (err, res) {
+	await connection.execute('SELECT * FROM `todo` WHERE `todo_whose`=? AND `isVisible`= ?;', [personsname_who_reqested_list,willInclude], function (err, res) {
 	var ret = JSON.stringify(res);
 	// console.log("response of sql execution:" + JSON.stringify(res));
 //  console.log("ret:"+ret);
@@ -136,7 +137,8 @@ app.post('/post', function (req, res) {
 		console.log("seems be delete or close");
 		if (req.body.do == "delete") {
 			console.log("seems delete todo, id "+req.body.id+" will be delete");
-			connection.execute('DELETE FROM todo WHERE id_todo = ?',[req.body.id]);
+			// connection.execute('DELETE FROM todo WHERE id_todo = ?',[req.body.id]);
+			connection.execute('UPDATE todo SET isVisible = 3 WHERE id_todo = ?',[req.body.id]);
 			//I don't know if it's a good to permanently delete some kind of content...
 		} else if (req.body.do == "close") {
 			console.log("seems close todo, id "+req.body.id+" will be hide");
@@ -149,16 +151,17 @@ app.post('/post', function (req, res) {
 			res.end();
 		}
 	} else {
-		console.log("seems be post new todo");
+		console.log("seems be posting new todo");
 		// リクエストボディを出力
 		// console.log(JSON.stringify(req.body));
 
 		var name_whose_posted = (req.body.name);
+		var title_of_todo = (req.body.title);
 		var postedtodo = (req.body.data);
-		var someones_todo_title = "this is a test value";
-		console.log(name_whose_posted+" posted "+postedtodo+".");
+		// var someones_todo_title = "this is a test value";
+		console.log(name_whose_posted+" posted.title :"+title_of_todo+"body:"+postedtodo);
 		try {
-			connection.execute('insert into todo (todo_title,what_todo,todo_whose)values(?,?,?)', [someones_todo_title, postedtodo, name_whose_posted]);
+			connection.execute('insert into todo (todo_title,what_todo,todo_whose)values(?,?,?)', [title_of_todo, postedtodo, name_whose_posted]);
 		} catch (e) {
 			console.log(e);
 		}

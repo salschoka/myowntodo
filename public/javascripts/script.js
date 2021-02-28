@@ -1,28 +1,31 @@
 let _data = "";
 
 function submit() {
-	console.log("function submit() called");
+	// console.log("function submit() called");
 //   console.log("submit: "+ document.getElementById("add_todo").value);
 //   $.post( './post', $('#add_todo').value );
 
 //   var text = $("#add_todo").serialize();
-  var text = document.getElementById("add_todo").value;
-  console.log("add_todo:"+text);
+  var text  = document.getElementById("add_todo").value;
+  var title = document.getElementById("title_todo").value;
+  console.log("add_todo title:"+title+"todo"+text);
   $.ajax({
     type: "POST",
     url: './post',
     type: 'POST',
     data: {
       'name': "tester",
+      'title':title,
       'data': text
     },
     dataType: 'text'
   }).done(function( data,/* textStatus, jqXHR */) {
     //成功
     console.log("submit done,");
-    console.log("res: "+data);
+    // console.log("res: "+data);
 
     document.getElementById("add_todo").value = '';
+    document.getElementById("title_todo").value = '';
   }).fail(function(/* jqXHR, textStatus,*/ errorThrown) {
     //失敗
     console.log("submit failed");
@@ -56,7 +59,7 @@ function request(misc) {
   })
   .done(function (res) {
     console.log("request success.");
-    console.log("res: "+res);
+    // console.log("res: "+res);
 
     if (res === _data) {
       console.log("Data not changed, dom update skipped.");
@@ -69,10 +72,24 @@ function request(misc) {
 
     const _res = JSON.parse(res);
 
-    $(".todo").remove();
+    $(".todo").remove();$(".todo_closed").remove();
 
     _res.forEach(todo => {
-      $("#lists").append("<div class='todo' data-todoid='"+todo.id_todo+"'><span>"+"タイトル:"+todo.todo_title+"<br>"+"todo:"+todo.what_todo+"<br>"+"追加した日:"+todo.addDate_todo+"<br>内部処理用id:"+todo.id_todo+"</span><span class='fl_right'><span class='todo_button'><button class='todo_actualbutton' onclick=delete_todo($(this).parents('div.todo').attr('data-todoid'))>delete</button></span><span class='todo_button'><button class='todo_actualbutton' onclick=close_todo($(this).parents('div.todo').attr('data-todoid'))>close</button></span></span></div>");
+      if (todo.isVisible == 2) {
+        $("#lists").append("<div class='todo_closed' data-todoid='"+todo.id_todo+"'><span>"+"タイトル:"+todo.todo_title+"<br>"+"todo:"+todo.what_todo+"<br>"+"追加した日:"+todo.addDate_todo+"<br>内部処理用id:"+todo.id_todo+"</span><span class='fl_right'>" +
+            "<span class='todo_button'><button class='todo_actualbutton'  onclick=delete_todo($(this).parents('div.todo_closed').attr('data-todoid'))>delete</button></span>" +
+            "<span class='todo_button'><button class='todo_actualbutton' onclick=unclose_todo($(this).parents('div.todo_closed').attr('data-todoid'))>unclose</button></span>" +
+            // "<span class='todo_button'><button class='todo_actualbutton'   onclick=close_todo($(this).parents('div.todo_closed').attr('data-todoid'))>close</button></span>" +
+            "</span></div>");
+      } else if (todo.isVisible == 1) {
+        $("#lists").append("<div class='todo' data-todoid='"+todo.id_todo+"'><span>"+"タイトル:"+todo.todo_title+"<br>"+"todo:"+todo.what_todo+"<br>"+"追加した日:"+todo.addDate_todo+"<br>内部処理用id:"+todo.id_todo+"</span><span class='fl_right'>" +
+            "<span class='todo_button'><button class='todo_actualbutton'  onclick=delete_todo($(this).parents('div.todo').attr('data-todoid'))>delete</button></span>" +
+            // "<span class='todo_button'><button class='todo_actualbutton' onclick=unclose_todo($(this).parents('div.todo').attr('data-todoid'))>unclose</button></span>" +
+            "<span class='todo_button'><button class='todo_actualbutton'   onclick=close_todo($(this).parents('div.todo').attr('data-todoid'))>close</button></span>" +
+            "</span></div>");
+      } else {
+        console.log("something freaking went wrong, I cant judge the things to show.")
+      }
     })
 //     JSON.parse(res);
 //     $("#lists").append("<p class='to_do'>"+res+"</p>");
@@ -98,7 +115,7 @@ function close_todo(close_id) {
   }).done(function( data,/* textStatus, jqXHR */) {
     //成功
     console.log("submit close done,");
-    console.log("res: "+data);
+    // console.log("res: "+data);
 
   }).fail(function(/* jqXHR, textStatus,*/ errorThrown) {
     //失敗
@@ -126,7 +143,7 @@ function delete_todo(delete_id) {
   }).done(function( data,/* textStatus, jqXHR */) {
     //成功
     console.log("submit delete done,");
-    console.log("res: "+data);
+    // console.log("res: "+data);
 
   }).fail(function(/* jqXHR, textStatus,*/ errorThrown) {
     //失敗
@@ -154,7 +171,7 @@ function unclose_todo(unclose_id) {
   }).done(function( data,/* textStatus, jqXHR */) {
     //成功
     console.log("submit unclose done,");
-    console.log("res: "+data);
+    // console.log("res: "+data);
 
   }).fail(function(/* jqXHR, textStatus,*/ errorThrown) {
     //失敗
@@ -164,7 +181,7 @@ function unclose_todo(unclose_id) {
     //通信終了
     console.log("todo unclose end.")
   });
-  request();
+  request("closed");
 }
 
 request();
